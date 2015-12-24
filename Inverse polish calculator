@@ -1,0 +1,139 @@
+#include <stdio.h>
+#include <conio.h>
+#include <stdlib.h>
+#include <iostream>
+#include <fstream>
+#include <string.h>
+
+char mas[200];
+
+int calc(int l, int j){
+  int k=0, i=0, a=0, b=0, r=0, opers=0, p='+', m='-', u='*', d='/', r1, n=0, set, s=0;
+//printf("\nIm at .%c. and i is %d\n", mas[i], i);
+//printf("\nFirst operation: %c\n", mas[l+k]);
+//printf("\nLenght is %d\nJ is %d\n", l, j);
+  set=j/2;
+  while(i!=l){
+//printf("opers=%d\n", opers);
+    if(mas[i]!=' '){
+      if(opers==0){
+        a=atoi(&mas[i]);
+        opers=1;
+        //n=i;
+//printf("got a=%d\n", a);
+    	}
+      if(opers==2){
+        b=atoi(&mas[i]);
+        opers=3;
+        s=i;
+//printf("got b=%d\n", b);
+    	}
+    }
+    if(mas[i]==' '){
+//printf("Probel ");
+      opers=2;
+    }
+    if((opers>2) && (set>0)){
+    	set--;
+      if(mas[l+k]==p){
+        a=a+b;
+       }
+      if(mas[l+k]==m){
+        a=a-b;
+printf("\n	SUM	\n");
+      }
+      if(mas[l+k]==u){
+        a=a*b;
+      }
+      if(mas[l+k]==d){
+        a=a/b;
+      }
+      mas[l+k]=' ';
+/*printf("\nBefor Im at .%c. and i is %d\n", mas[i], i);
+      for(int q=0; q<20; q++){
+      	printf("%c", mas[q]);
+      }
+      printf("end of mas\n");*/
+      b=a;
+      n=0;
+      while(b!=0){
+      	b=b*0.1;
+      	n++;
+			}
+      sprintf(&mas[i], "%d", a);
+      opers=1;
+      ++++k;
+      i=s;
+      mas[i+n]=' ';
+/*printf("\nAfter Im at .%c. and i is %d\n", mas[i], i);
+      for(int q=0; q<20; q++){
+      	printf("%c", mas[q]);
+      }
+      printf("end of mas\n");*/
+    }
+    i++;
+  }
+//printf("\nopers=%d\n",opers);
+//printf("a=%d\nb=%d\n", a, b);
+    return a;
+}
+
+int main(){
+  int r=0, i=1, p='+', m='-', u='*', d='/', l=0, j, c;
+  memset(mas,100,0);
+  while(1){
+    printf("\n1. Direct enter\n2. Inverse polish enter\n3. Calc\n4. Clear\n5. Exit\n");
+    c=getch();
+    switch(c){
+      case '1': printf("You can use: 1 2 3 4 5 6 7 8 9 + - * /\nDont use spacebar\n");
+                scanf("%s",mas);
+                l=strlen(mas);
+                printf("You entered: %s", mas);
+                j=0;
+                for(i=0;i<l;i++){
+                  if(mas[i]==p){
+                    mas[l+j]='+';
+                    mas[i]=' ';
+                    j+=2;
+                  }
+		              if(mas[i]==m){
+                    mas[l+j]='-';
+                    mas[i]=' ';
+                    j+=2;
+                  }
+                  if(mas[i]==u){
+                    mas[l+j]='*';
+                    mas[i]=' ';
+                    j+=2;
+                  }
+                  if(mas[i]==d){
+                    mas[l+j]='/';
+                    mas[i]=' ';
+                    j+=2;
+                  }
+                }
+                //printf("\nLenght is %d\nJ is %d\n", l, j);
+                break;
+      case '2': printf("You can use: 1 2 3 4 5 6 7 8 9 + - * /\nUse spacebar between numbers and operations\n");
+                gets(mas);
+                l=strlen(mas);
+                j=0;
+                printf("You entered: %s", mas);
+		            for(i=0;i<l;i++){
+                  if((mas[i]==p) || (mas[i]==m) || (mas[i]==u) || (mas[i]==d))
+                  ++++j;
+                }
+		l=l-j+1;
+                //printf("\nLenght is %d\nJ is %d\n", l, j);
+                break;
+      case '3': r=calc(l,j);
+                printf("\nResult: %d\n", r);
+                //printf("mas=%s\n", mas);
+                break;
+      case '4': for(int q=0; q<100; q++)
+		              mas[q]=0;
+                break;
+      case '5': return 0;
+    }
+  }
+}
